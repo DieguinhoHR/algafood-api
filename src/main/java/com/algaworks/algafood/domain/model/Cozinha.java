@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Cozinha {
 
+	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

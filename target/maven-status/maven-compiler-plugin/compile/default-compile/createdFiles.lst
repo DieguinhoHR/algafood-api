@@ -1,2 +1,10 @@
+com/algaworks/algafood/api/controller/CozinhaController.class
 com/algaworks/algafood/AlgafoodApiApplication.class
+com/algaworks/algafood/domain/repository/EstadoRepository.class
+com/algaworks/algafood/domain/model/Permissao.class
+com/algaworks/algafood/domain/model/FormaPagamento.class
+com/algaworks/algafood/api/controller/EstadoController.class
+com/algaworks/algafood/domain/model/Cidade.class
+com/algaworks/algafood/domain/repository/CozinhaRepository.class
 com/algaworks/algafood/domain/repository/RestauranteRepository.class
+com/algaworks/algafood/domain/model/Estado.class

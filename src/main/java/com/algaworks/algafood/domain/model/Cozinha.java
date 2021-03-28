@@ -4,8 +4,10 @@ import javax.persistence.*;
 import javax.persistence.Id;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Cozinha {
 

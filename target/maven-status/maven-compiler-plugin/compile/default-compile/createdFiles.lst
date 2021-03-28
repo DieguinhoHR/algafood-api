@@ -4,7 +4,11 @@ com/algaworks/algafood/domain/repository/EstadoRepository.class
 com/algaworks/algafood/domain/model/Permissao.class
 com/algaworks/algafood/domain/model/FormaPagamento.class
 com/algaworks/algafood/api/controller/EstadoController.class
+com/algaworks/algafood/domain/exception/EntidadeNaoEncontradaException.class
+com/algaworks/algafood/domain/exception/EntidadeEmUsoException.class
 com/algaworks/algafood/domain/model/Cidade.class
 com/algaworks/algafood/domain/repository/CozinhaRepository.class
 com/algaworks/algafood/domain/repository/RestauranteRepository.class
+com/algaworks/algafood/infrastructure/service/CadastroCozinhaServiceImpl.class
 com/algaworks/algafood/domain/model/Estado.class
+com/algaworks/algafood/domain/service/CadastroCozinhaService.class

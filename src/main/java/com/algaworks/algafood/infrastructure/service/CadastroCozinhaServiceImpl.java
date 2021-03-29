@@ -32,6 +32,7 @@ public class CadastroCozinhaServiceImpl implements CadastroCozinhaService {
 		return this.cozinhaRepository.save(cozinha);
 	}
 
+	@Transactional
 	@Override
 	public void excluir(Long cozinhaId) {
 		try {

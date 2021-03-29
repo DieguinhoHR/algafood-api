@@ -1,5 +1,6 @@
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/exception/EntidadeNaoEncontradaException.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/model/Restaurante.java
+/home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/infrastructure/service/CadastroRestauranteServiceImpl.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/infrastructure/service/CadastroCozinhaServiceImpl.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/model/Permissao.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/service/CadastroCozinhaService.java
@@ -13,5 +14,6 @@
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/model/Estado.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/model/Cozinha.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/repository/RestauranteRepository.java
+/home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/service/CadastroRestauranteService.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/api/controller/RestauranteController.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/model/Cidade.java

@@ -36,8 +36,8 @@ public class CadastroCozinhaServiceImpl implements CadastroCozinhaService {
 	@Override
 	public void excluir(Long cozinhaId) {
 		try {
-			Optional<Cozinha> cozinha = this.cozinhaRepository.findById(cozinhaId);
-			this.cozinhaRepository.delete(cozinha.get());
+			this.cozinhaRepository.deleteById(cozinhaId);
+
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
 				String.format("Não existe um cadastro de cozinha com código %d", cozinhaId));

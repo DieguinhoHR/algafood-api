@@ -1,13 +1,16 @@
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/exception/EntidadeNaoEncontradaException.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/model/Restaurante.java
+/home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/repository/FormaPagamentoRepository.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/infrastructure/service/CadastroRestauranteServiceImpl.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/infrastructure/service/CadastroCozinhaServiceImpl.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/model/Permissao.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/service/CadastroCozinhaService.java
+/home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/repository/PermissaoRepository.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/exception/EntidadeEmUsoException.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/model/FormaPagamento.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/repository/EstadoRepository.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/repository/CozinhaRepository.java
+/home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/repository/CidadeRepository.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/api/controller/CozinhaController.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/api/controller/EstadoController.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/AlgafoodApiApplication.java

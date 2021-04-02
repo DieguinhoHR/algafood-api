@@ -14,7 +14,7 @@
 	<name>algafood-api</name>
 	<description>Api de delivery de comida</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 		<dockerfile-maven-version>1.4.13</dockerfile-maven-version>
 	</properties>
 	<dependencies>

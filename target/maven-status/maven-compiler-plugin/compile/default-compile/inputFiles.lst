@@ -19,4 +19,5 @@
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/repository/RestauranteRepository.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/service/CadastroRestauranteService.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/api/controller/RestauranteController.java
+/home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/model/Endereco.java
 /home/diego/code/cursos/algafood-api/src/main/java/com/algaworks/algafood/domain/model/Cidade.java

@@ -6,6 +6,7 @@ com/algaworks/algafood/domain/model/FormaPagamento.class
 com/algaworks/algafood/infrastructure/service/CadastroRestauranteServiceImpl.class
 com/algaworks/algafood/api/controller/EstadoController.class
 com/algaworks/algafood/domain/repository/RestauranteRepository.class
+com/algaworks/algafood/domain/model/Grupo.class
 com/algaworks/algafood/domain/repository/PermissaoRepository.class
 com/algaworks/algafood/domain/model/Estado.class
 com/algaworks/algafood/domain/service/CadastroRestauranteService.class
@@ -17,5 +18,7 @@ com/algaworks/algafood/domain/exception/EntidadeEmUsoException.class
 com/algaworks/algafood/domain/model/Cidade.class
 com/algaworks/algafood/domain/repository/CozinhaRepository.class
 com/algaworks/algafood/infrastructure/service/CadastroCozinhaServiceImpl.class
+com/algaworks/algafood/domain/model/Produto.class
 com/algaworks/algafood/domain/repository/FormaPagamentoRepository.class
+com/algaworks/algafood/domain/model/Usuario.class
 com/algaworks/algafood/domain/service/CadastroCozinhaService.class

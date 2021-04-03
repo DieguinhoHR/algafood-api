@@ -9,4 +9,5 @@ public interface CadastroCozinhaService {
 	List<Cozinha> listar();
 	Cozinha salvar(Cozinha cozinha);
 	void excluir(Long id);
+	Cozinha buscarOuFalhar(Long cozinhaId);
 }

@@ -1,7 +1,6 @@
 package com.algaworks.algafood.infrastructure.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -17,6 +16,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CadastroCozinhaServiceImpl implements CadastroCozinhaService {
+
+	private static final String MSG_COZINHA_NAO_ENCONTRADA
+		= "Não existe um cadastro de cozinha com código %d";
+	private static final String MSG_COZINHA_EM_USO
+		= "Cozinha de código %d não pode ser removida, pois está em uso";
 
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
@@ -40,10 +44,18 @@ public class CadastroCozinhaServiceImpl implements CadastroCozinhaService {
 
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
-				String.format("Não existe um cadastro de cozinha com código %d", cozinhaId));
+				String.format(MSG_COZINHA_NAO_ENCONTRADA, cozinhaId));
+
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
-				String.format("Cozinha de código %d não pode ser removida, pois está em uso", cozinhaId));
+				String.format(MSG_COZINHA_EM_USO, cozinhaId));
 		}
+	}
+
+	@Override
+	public Cozinha buscarOuFalhar(Long cozinhaId) {
+		return this.cozinhaRepository.findById(cozinhaId)
+			.orElseThrow(() -> new EntidadeNaoEncontradaException(
+				String.format(MSG_COZINHA_NAO_ENCONTRADA, cozinhaId)));
 	}
 }

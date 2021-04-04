@@ -37,6 +37,7 @@ public class CadastroCidadeServiceImpl implements CadastroCidadeService {
 
 	public Cidade salvar(Cidade cidade) {
 		Long estadoId = cidade.getEstado().getId();
+
 		Estado estado = this.cadastroEstadoService.buscarOuFalhar(estadoId);
 		cidade.setEstado(estado);
 		return cidadeRepository.save(cidade);

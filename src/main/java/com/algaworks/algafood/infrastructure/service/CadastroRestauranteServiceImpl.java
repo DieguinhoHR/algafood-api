@@ -7,6 +7,7 @@ import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
+import com.algaworks.algafood.domain.service.CadastroCozinhaService;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -24,6 +25,9 @@ public class CadastroRestauranteServiceImpl implements CadastroRestauranteServic
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
 
+	@Autowired
+	private CadastroCozinhaService cadastroCozinhaService;
+
 	@Override
 	public List<Restaurante> listar() {
 		return this.restauranteRepository.findAll();
@@ -32,9 +36,8 @@ public class CadastroRestauranteServiceImpl implements CadastroRestauranteServic
 	@Override
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
-		Cozinha cozinha = this.cozinhaRepository.findById(cozinhaId)
-			.orElseThrow(() -> new EntidadeNaoEncontradaException(
-				String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, cozinhaId)));
+
+		Cozinha cozinha = this.cadastroCozinhaService.buscarOuFalhar(cozinhaId);
 
 		restaurante.setCozinha(cozinha);
 

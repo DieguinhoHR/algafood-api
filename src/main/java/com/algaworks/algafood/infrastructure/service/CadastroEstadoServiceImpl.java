@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.algaworks.algafood.domain.exception.EstadoNaoEncontradoException;
 import com.algaworks.algafood.domain.model.Estado;
 import com.algaworks.algafood.domain.repository.EstadoRepository;
 import com.algaworks.algafood.domain.service.CadastroEstadoService;
@@ -48,7 +49,7 @@ public class CadastroEstadoServiceImpl implements CadastroEstadoService {
 			this.estadoRepository.deleteById(estadoId);
 
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException(
+			throw new EstadoNaoEncontradoException(
 				String.format(MSG_ESTADO_NAO_ENCONTRADO, estadoId));
 
 		} catch (DataIntegrityViolationException e) {

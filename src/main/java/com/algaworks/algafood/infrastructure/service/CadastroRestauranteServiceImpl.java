@@ -2,7 +2,7 @@ package com.algaworks.algafood.infrastructure.service;
 
 import java.util.List;
 
-import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.algaworks.algafood.domain.exception.RestauranteNaoEncontradoException;
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
@@ -49,15 +49,13 @@ public class CadastroRestauranteServiceImpl implements CadastroRestauranteServic
 		try {
 			this.restauranteRepository.deleteById(restauranteId);
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException(
+			throw new RestauranteNaoEncontradoException(
 				String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId));
 		}
 	}
 
-	@Override
 	public Restaurante buscarOuFalhar(Long restauranteId) {
 		return restauranteRepository.findById(restauranteId)
-			.orElseThrow(() -> new EntidadeNaoEncontradaException(
-				String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId)));
+			.orElseThrow(() -> new RestauranteNaoEncontradoException(restauranteId));
 	}
 }

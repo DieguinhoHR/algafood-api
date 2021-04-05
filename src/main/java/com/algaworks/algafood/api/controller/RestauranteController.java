@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
@@ -44,7 +45,7 @@ public class RestauranteController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Restaurante adicionar(@RequestBody Restaurante restaurante) {
+	public Restaurante adicionar(@Valid @RequestBody Restaurante restaurante) {
 		try {
 			return this.cadastroRestauranteService.salvar(restaurante);
 		} catch (CozinhaNaoEncontradaException e) {

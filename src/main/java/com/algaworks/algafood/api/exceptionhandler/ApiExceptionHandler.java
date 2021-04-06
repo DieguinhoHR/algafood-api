@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.algaworks.algafood.core.validation.ValidacaoException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.servlet.LocaleContextResolver;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -40,6 +41,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	@Autowired
 	private MessageSource messageSource;
 
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+		HttpHeaders headers, HttpStatus status, WebRequest request) {
+		return handleValidationInternal(ex, ex.getBindingResult(), headers, status, request);
+	}
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request) {
 		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -48,7 +55,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 		ex.printStackTrace();
 
-		Problem problem = createProblemBuilder(status, problemType, detail).build();
+		Problem problem = createProblemBuilder(status, problemType, detail)
+			.userMessage(detail)
+			.build();
 
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
@@ -61,7 +70,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		String detail = String.format("O recurso %s, que você tentou acessar, é inexistente.",
 			ex.getRequestURL());
 
-		Problem problem = createProblemBuilder(status, problemType, detail).build();
+		Problem problem = createProblemBuilder(status, problemType, detail)
+			.userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
+			.build();
 
 		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
@@ -88,7 +99,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 				+ "que é de um tipo inválido. Corrija e informe um valor compatível com o tipo %s.",
 			ex.getName(), ex.getValue(), ex.getRequiredType().getSimpleName());
 
-		Problem problem = createProblemBuilder(status, problemType, detail).build();
+		Problem problem = createProblemBuilder(status, problemType, detail)
+			.userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
+			.build();
 
 		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
@@ -107,7 +120,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
 		String detail = "O corpo da requisição está inválido. Verifique erro de sintaxe.";
 
-		Problem problem = createProblemBuilder(status, problemType, detail).build();
+		Problem problem = createProblemBuilder(status, problemType, detail)
+			.userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
+			.build();
 
 		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
@@ -153,7 +168,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
 		String detail = ex.getMessage();
 
-		Problem problem = createProblemBuilder(status, problemType, detail).build();
+		Problem problem = createProblemBuilder(status, problemType, detail)
+			.userMessage(detail)
+			.build();
 
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
@@ -179,7 +196,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		ProblemType problemType = ProblemType.ERRO_NEGOCIO;
 		String detail = ex.getMessage();
 
-		Problem problem = createProblemBuilder(status, problemType, detail).build();
+		Problem problem = createProblemBuilder(status, problemType, detail)
+			.userMessage(detail)
+			.build();
 
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
@@ -224,22 +243,30 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 			.collect(Collectors.joining("."));
 	}
 
-	@Override
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-		HttpHeaders headers, HttpStatus status, WebRequest request) {
+	@ExceptionHandler({ ValidacaoException.class })
+	public ResponseEntity<Object> handleValidacaoException(ValidacaoException ex, WebRequest request) {
+		return handleValidationInternal(ex, ex.getBindingResult(), new HttpHeaders(),
+			HttpStatus.BAD_REQUEST, request);
+	}
+
+	private ResponseEntity<Object> handleValidationInternal(Exception ex, BindingResult bindingResult, HttpHeaders headers,
+		HttpStatus status, WebRequest request) {
 
 		ProblemType problemType = ProblemType.DADOS_INVALIDOS;
 		String detail = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
 
-		BindingResult bindingResult = ex.getBindingResult();
+		List<Problem.Object> problemObjects = bindingResult.getAllErrors().stream()
+			.map(objectError -> {
+				String message = messageSource.getMessage(objectError, LocaleContextHolder.getLocale());
 
-		List<Problem.Field> problemFields = bindingResult.getFieldErrors().stream()
-			.map(fieldError -> {
-				// Aqui trabalha com a internacionalização
-				String message = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
+				String name = objectError.getObjectName();
 
-				return Problem.Field.builder()
-					.name(fieldError.getField())
+				if (objectError instanceof FieldError) {
+					name = ((FieldError) objectError).getField();
+				}
+
+				return Problem.Object.builder()
+					.name(name)
 					.userMessage(message)
 					.build();
 			})
@@ -247,7 +274,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 		Problem problem = createProblemBuilder(status, problemType, detail)
 			.userMessage(detail)
-			.fields(problemFields)
+			.objects(problemObjects)
 			.build();
 
 		return handleExceptionInternal(ex, problem, headers, status, request);

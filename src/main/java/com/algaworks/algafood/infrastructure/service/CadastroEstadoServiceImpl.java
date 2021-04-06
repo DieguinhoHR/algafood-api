@@ -2,6 +2,8 @@ package com.algaworks.algafood.infrastructure.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EstadoNaoEncontradoException;
 import com.algaworks.algafood.domain.model.Estado;
@@ -26,12 +28,12 @@ public class CadastroEstadoServiceImpl implements CadastroEstadoService {
 		return this.estadoRepository.findAll();
 	}
 
-	@Override
+	@Transactional
 	public Estado salvar(Estado estado) {
 		return this.estadoRepository.save(estado);
 	}
 
-	@Override
+	@Transactional
 	public void excluir(Long estadoId) {
 		try {
 			this.estadoRepository.deleteById(estadoId);

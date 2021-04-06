@@ -2,6 +2,8 @@ package com.algaworks.algafood.infrastructure.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import com.algaworks.algafood.domain.exception.RestauranteNaoEncontradoException;
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
@@ -34,6 +36,7 @@ public class CadastroRestauranteServiceImpl implements CadastroRestauranteServic
 	}
 
 	@Override
+	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
 
@@ -44,7 +47,7 @@ public class CadastroRestauranteServiceImpl implements CadastroRestauranteServic
 		return this.restauranteRepository.save(restaurante);
 	}
 
-	@Override
+	@Transactional
 	public void excluir(Long restauranteId) {
 		try {
 			this.restauranteRepository.deleteById(restauranteId);

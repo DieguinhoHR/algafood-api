@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import com.algaworks.algafood.core.validation.ValidacaoException;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Restaurante;
@@ -81,20 +80,20 @@ public class RestauranteController {
 		Restaurante restauranteAtual = this.cadastroRestauranteService.buscarOuFalhar(restauranteId);
 
 		merge(campos, restauranteAtual, request);
-		validate(restauranteAtual, "restaurante");
+		//validate(restauranteAtual, "restaurante");
 
 		return atualizar(restauranteId, restauranteAtual);
 	}
 
-	private void validate(Restaurante restaurante, String objectName) {
-		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(restaurante, objectName);
-
-		validator.validate(restaurante, bindingResult);
-
-		if (bindingResult.hasErrors()) {
-			throw new ValidacaoException(bindingResult);
-		}
-	}
+//	private void validate(Restaurante restaurante, String objectName) {
+//		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(restaurante, objectName);
+//
+//		validator.validate(restaurante, bindingResult);
+//
+//		if (bindingResult.hasErrors()) {
+//			throw new ValidacaoException(bindingResult);
+//		}
+//	}
 
 	/**
 	 * Pega os valores e atribui a instância

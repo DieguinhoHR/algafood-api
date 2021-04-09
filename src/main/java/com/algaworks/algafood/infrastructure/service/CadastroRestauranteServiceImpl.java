@@ -51,6 +51,7 @@ public class CadastroRestauranteServiceImpl implements CadastroRestauranteServic
 	public void excluir(Long restauranteId) {
 		try {
 			this.restauranteRepository.deleteById(restauranteId);
+			this.restauranteRepository.flush();
 		} catch (EmptyResultDataAccessException e) {
 			throw new RestauranteNaoEncontradoException(
 				String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId));

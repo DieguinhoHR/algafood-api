@@ -37,6 +37,7 @@ public class CadastroEstadoServiceImpl implements CadastroEstadoService {
 	public void excluir(Long estadoId) {
 		try {
 			this.estadoRepository.deleteById(estadoId);
+			this.estadoRepository.flush();
 
 		} catch (EmptyResultDataAccessException e) {
 			throw new EstadoNaoEncontradoException(estadoId);

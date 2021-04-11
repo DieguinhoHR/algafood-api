@@ -10,4 +10,6 @@ public interface CadastroRestauranteService {
 	Restaurante salvar(Restaurante cozinha);
 	void excluir(Long id);
 	Restaurante buscarOuFalhar(Long cidadeId);
+	void ativar(Long restauranteId);
+	void inativar(Long restauranteId);
 }

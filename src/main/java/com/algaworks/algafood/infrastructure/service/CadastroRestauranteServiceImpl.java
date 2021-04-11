@@ -58,6 +58,20 @@ public class CadastroRestauranteServiceImpl implements CadastroRestauranteServic
 		}
 	}
 
+	@Transactional
+	public void ativar(Long restauranteId) {
+		Restaurante restauranteAtual = this.buscarOuFalhar(restauranteId);
+		// O próprio jpa faz a atualização
+		restauranteAtual.ativar();
+	}
+
+	@Transactional
+	public void inativar(Long restauranteId) {
+		Restaurante restauranteAtual = this.buscarOuFalhar(restauranteId);
+		// O próprio jpa faz a atualização
+		restauranteAtual.inativar();
+	}
+
 	public Restaurante buscarOuFalhar(Long restauranteId) {
 		return restauranteRepository.findById(restauranteId)
 			.orElseThrow(() -> new RestauranteNaoEncontradoException(restauranteId));

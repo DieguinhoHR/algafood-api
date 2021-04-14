@@ -5,10 +5,12 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import com.algaworks.algafood.domain.exception.RestauranteNaoEncontradoException;
+import com.algaworks.algafood.domain.model.Cidade;
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
+import com.algaworks.algafood.domain.service.CadastroCidadeService;
 import com.algaworks.algafood.domain.service.CadastroCozinhaService;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class CadastroRestauranteServiceImpl implements CadastroRestauranteServic
 	@Autowired
 	private CadastroCozinhaService cadastroCozinhaService;
 
+	@Autowired
+	private CadastroCidadeService cadastroCidadeService;
+
 	@Override
 	public List<Restaurante> listar() {
 		return this.restauranteRepository.findAll();
@@ -39,10 +44,13 @@ public class CadastroRestauranteServiceImpl implements CadastroRestauranteServic
 	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
+		Long cidadeId = restaurante.getEndereco().getCidade().getId();
 
 		Cozinha cozinha = this.cadastroCozinhaService.buscarOuFalhar(cozinhaId);
+		Cidade cidade = this.cadastroCidadeService.buscarOuFalhar(cidadeId);
 
 		restaurante.setCozinha(cozinha);
+		restaurante.getEndereco().setCidade(cidade);
 
 		return this.restauranteRepository.save(restaurante);
 	}
